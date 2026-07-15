@@ -1,0 +1,17 @@
+export default {
+  background: "#080b1a",
+  surface: "rgba(255,255,255,0.05)",
+  surfaceBorder: "rgba(255,255,255,0.08)",
+  primary: "#00c9b1",
+  primaryLight: "rgba(0,201,177,0.12)",
+  primaryBorder: "rgba(0,201,177,0.3)",
+  purple: "#7b61ff",
+  purpleLight: "rgba(123,97,255,0.15)",
+  purpleBorder: "rgba(123,97,255,0.3)",
+  white: "#f0f0f0",
+  grey: "rgba(255,255,255,0.5)",
+  greyDark: "rgba(255,255,255,0.25)",
+  error: "#ff6b6b",
+  errorLight: "rgba(255,107,107,0.1)",
+  navy: "#1a0a3e",
+};

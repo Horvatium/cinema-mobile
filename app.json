@@ -1,0 +1,48 @@
+{
+  "expo": {
+    "name": "KinoPlex",
+    "slug": "kinoplex",
+    "version": "1.5.0",
+    "orientation": "portrait",
+    "icon": "./assets/images/icon_kino.png",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "package": "si.kinoplex.app",
+      "versionCode": 1,
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/images/android-icon-foreground_kino.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c6edc1cd-5cde-4902-8699-e31aee5ce0b7",
+      "enabled": true,
+      "fallbackToCacheTimeout": 0,
+      "checkAutomatically": "ON_LOAD"
+    },
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
+    "web": {
+      "favicon": "./assets/images/favicon_kino.png"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/icon_kino.png",
+          "color": "#e50914"
+        }
+      ]
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "c6edc1cd-5cde-4902-8699-e31aee5ce0b7"
+      }
+    },
+    "owner": "horvat"
+  }
+}
