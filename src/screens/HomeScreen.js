@@ -92,7 +92,7 @@ export default function HomeScreen({ navigation }) {
         showsVerticalScrollIndicator={false}
         ListHeaderComponent={() => (
           <View>
-            {/* ── Hero Banner ── */}
+            {/* ── Hero pasica ── */}
             {heroFilm && (
               <ImageBackground
                 source={{
@@ -132,7 +132,7 @@ export default function HomeScreen({ navigation }) {
                   </View>
                 </View>
 
-                {/* Hero dots */}
+                {/* Hero pike */}
                 <View style={styles.heroDots}>
                   {allFilms.map((_, i) => (
                     <TouchableOpacity
@@ -148,7 +148,7 @@ export default function HomeScreen({ navigation }) {
               </ImageBackground>
             )}
 
-            {/* ── Top Bar: Navigation buttons only ── */}
+            {/* ── Zgornja vrstica: Samo navigacijski gumbi ── */}
             <View style={styles.topBar}>
               <View style={styles.topBarRight}>
                 <Text style={styles.greeting}>
@@ -168,7 +168,7 @@ export default function HomeScreen({ navigation }) {
               </View>
             </View>
 
-            {/* ── Search ── */}
+            {/* ── Iskanje ── */}
             <View style={styles.searchContainer}>
               <TextInput
                 style={styles.searchInput}
@@ -179,7 +179,7 @@ export default function HomeScreen({ navigation }) {
               />
             </View>
 
-            {/* ── Section Label ── */}
+            {/* ── oznaka oddelka ── */}
             <View style={styles.sectionLabelRow}>
               <Text style={styles.sectionLabel}>ZDAJ V KINODVORANAH</Text>
             </View>
@@ -249,7 +249,7 @@ export default function HomeScreen({ navigation }) {
               </ScrollView>
             </View>
 
-            {/* Price */}
+            {/* Cena */}
             <View style={styles.priceCol}>
               <Text style={styles.priceFrom}>od</Text>
               <Text style={styles.price}>€{film.screenings[0].price}</Text>
@@ -323,7 +323,7 @@ const styles = StyleSheet.create({
     borderRadius: 4,
   },
 
-  // ── Top Bar ──
+  // ── Zgornja vrstica ──
   topBar: {
     flexDirection: "row",
     justifyContent: "flex-end",
@@ -363,7 +363,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
 
-  // ── Search ──
+  // ── Iskanje ──
   searchContainer: { padding: 16, paddingBottom: 8 },
   searchInput: {
     backgroundColor: Colors.surface,
@@ -375,7 +375,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.surfaceBorder,
   },
 
-  // ── Section Label ──
+  // ── oznaka oddelka ──
   sectionLabelRow: {
     paddingHorizontal: 16,
     paddingBottom: 10,
@@ -387,7 +387,7 @@ const styles = StyleSheet.create({
     letterSpacing: 2,
   },
 
-  // ── Film Row ──
+  // ── Filmska vrsica ──
   filmRow: {
     flexDirection: "row",
     gap: 14,
