@@ -37,7 +37,7 @@ npm install
 npx expo start
 ```
 
-Aplikacijo lahko med razvojem zaženeš prek aplikacije Expo Go na telefonu, ali zgradiš
+Aplikacijo se lahko med razvojem zažene prek aplikacije Expo Go na telefonu, ali se zgradi
 namestitveno datoteko (APK) za Android:
 
 ```
