@@ -181,7 +181,7 @@ export default function HomeScreen({ navigation }) {
 
             {/* ── oznaka oddelka ── */}
             <View style={styles.sectionLabelRow}>
-              <Text style={styles.sectionLabel}>ZDAJ V KINODVORANAH</Text>
+              <Text style={styles.sectionLabel}>TRENUTNO NA SPOREDU</Text>
             </View>
           </View>
         )}
@@ -237,6 +237,10 @@ export default function HomeScreen({ navigation }) {
                       }
                     >
                       <Text style={styles.timeText}>
+                        {new Date(s.start_time).toLocaleDateString("sl-SI", {
+                          day: "2-digit",
+                          month: "2-digit",
+                        })}{" "}
                         {new Date(s.start_time).toLocaleTimeString("sl-SI", {
                           hour: "2-digit",
                           minute: "2-digit",
