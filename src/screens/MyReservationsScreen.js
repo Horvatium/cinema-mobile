@@ -10,7 +10,10 @@ import {
 } from "react-native";
 import Colors from "../../constants/colors";
 import { cancelReservation, getMyReservations } from "../services/api";
-import { showBookingCancelledNotification } from "../services/notifications";
+import {
+  formatPrice,
+  showBookingCancelledNotification,
+} from "../services/notifications";
 
 export default function MyReservationsScreen() {
   const [reservations, setReservations] = useState([]);
@@ -127,7 +130,8 @@ export default function MyReservationsScreen() {
           <Text style={styles.meta}>🏛️ {r.room_name}</Text>
           <Text style={styles.meta}>💺 Sedeži: {r.seats}</Text>
           <Text style={styles.meta}>
-            💰 Skupaj: <Text style={styles.price}>€{r.total_price}</Text>
+            💰 Skupaj:{" "}
+            <Text style={styles.price}>{formatPrice(r.total_price)}</Text>
           </Text>
 
           {r.status === "confirmed" && new Date(r.start_time) > new Date() && (

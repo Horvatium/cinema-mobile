@@ -13,6 +13,7 @@ import {
 import Colors from "../../constants/colors";
 import { useAuth } from "../context/AuthContext";
 import { getScreenings } from "../services/api";
+import { formatPrice } from "../services/notifications";
 
 export default function HomeScreen({ navigation }) {
   const [screenings, setScreenings] = useState([]);
@@ -256,7 +257,9 @@ export default function HomeScreen({ navigation }) {
             {/* Cena */}
             <View style={styles.priceCol}>
               <Text style={styles.priceFrom}>od</Text>
-              <Text style={styles.price}>€{film.screenings[0].price}</Text>
+              <Text style={styles.price}>
+                {formatPrice(film.screenings[0].price)}
+              </Text>
             </View>
           </TouchableOpacity>
         )}

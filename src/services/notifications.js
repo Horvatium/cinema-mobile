@@ -10,6 +10,10 @@ Notifications.setNotificationHandler({
   }),
 });
 
+// Zapiše znesek v slovenski obliki, npr. 9,99 €
+export const formatPrice = (value) =>
+  `${Number(value).toFixed(2).replace(".", ",")} €`;
+
 export const registerForPushNotifications = async () => {
   if (!Device.isDevice) return null;
 
@@ -43,7 +47,7 @@ export const showBookingConfirmedNotification = async (
   await Notifications.scheduleNotificationAsync({
     content: {
       title: "🎬 Rezervacija potrjena!",
-      body: `${filmTitle} — Sedeži: ${seats} — Skupaj: €${total}`,
+      body: `${filmTitle} — Sedeži: ${seats} — Skupaj: ${formatPrice(total)}`,
       sound: true,
     },
     trigger: null,
