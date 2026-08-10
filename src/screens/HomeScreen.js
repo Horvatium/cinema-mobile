@@ -226,7 +226,7 @@ export default function HomeScreen({ navigation }) {
 
               <ScrollView horizontal showsHorizontalScrollIndicator={false}>
                 <View style={styles.timesRow}>
-                  {film.screenings.slice(0, 4).map((s) => (
+                  {film.screenings.map((s) => (
                     <TouchableOpacity
                       key={s.id}
                       style={styles.timeChip}
