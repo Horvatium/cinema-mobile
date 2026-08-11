@@ -80,6 +80,7 @@ export const showScreeningCancelledNotification = async (
           day: "numeric",
           hour: "2-digit",
           minute: "2-digit",
+          timeZone: "UTC",
         },
       )} je bilo preklicano.`,
       sound: true,

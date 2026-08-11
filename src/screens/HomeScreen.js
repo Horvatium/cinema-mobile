@@ -241,11 +241,13 @@ export default function HomeScreen({ navigation }) {
                         {new Date(s.start_time).toLocaleDateString("sl-SI", {
                           day: "2-digit",
                           month: "2-digit",
+                          timeZone: "UTC",
                         })}{" "}
                         {new Date(s.start_time).toLocaleTimeString("sl-SI", {
                           hour: "2-digit",
                           minute: "2-digit",
                           hour12: false,
+                          timeZone: "UTC",
                         })}
                       </Text>
                     </TouchableOpacity>

@@ -119,12 +119,14 @@ export default function MyReservationsScreen() {
               year: "numeric",
               month: "short",
               day: "numeric",
+              timeZone: "UTC",
             })}
             {"  ob  "}
             {new Date(r.start_time).toLocaleTimeString("sl-SI", {
               hour: "2-digit",
               minute: "2-digit",
               hour12: false,
+              timeZone: "UTC",
             })}
           </Text>
           <Text style={styles.meta}>🏛️ {r.room_name}</Text>
@@ -144,7 +146,10 @@ export default function MyReservationsScreen() {
           )}
 
           <Text style={styles.bookedAt}>
-            Rezervirano {new Date(r.reserved_at).toLocaleDateString("sl-SI")}
+            Rezervirano{" "}
+            {new Date(r.reserved_at).toLocaleDateString("sl-SI", {
+              timeZone: "UTC",
+            })}
           </Text>
         </View>
       )}

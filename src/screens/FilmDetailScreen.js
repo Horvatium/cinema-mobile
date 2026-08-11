@@ -195,6 +195,7 @@ export default function FilmDetailScreen({ route, navigation }) {
               weekday: "long",
               month: "long",
               day: "numeric",
+              timeZone: "UTC",
             })}
           </Text>
           <Text style={styles.screeningText}>
@@ -203,6 +204,7 @@ export default function FilmDetailScreen({ route, navigation }) {
               hour: "2-digit",
               minute: "2-digit",
               hour12: false,
+              timeZone: "UTC",
             })}
             {"  ·  "}
             {screening.room_name}
