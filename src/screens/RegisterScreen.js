@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {
   ActivityIndicator,
+  Alert,
   KeyboardAvoidingView,
   Platform,
   ScrollView,
@@ -10,7 +11,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { useAuth } from "../context/AuthContext";
 import { register } from "../services/api";
 
 export default function RegisterScreen({ navigation }) {
@@ -24,7 +24,6 @@ export default function RegisterScreen({ navigation }) {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const { loginUser } = useAuth();
 
   const handleChange = (name, value) => {
     setForm({ ...form, [name]: value });
@@ -45,14 +44,18 @@ export default function RegisterScreen({ navigation }) {
 
     setLoading(true);
     try {
-      const response = await register({
+      await register({
         first_name: form.first_name,
         last_name: form.last_name,
         email: form.email,
         password: form.password,
         phone: form.phone,
       });
-      await loginUser(response.data.user, response.data.token);
+      Alert.alert(
+        "Registracija uspešna",
+        "Na vaš elektronski naslov smo poslali potrditveno povezavo. Odprite jo in nato se prijavite.",
+        [{ text: "V redu", onPress: () => navigation.goBack() }],
+      );
     } catch (err) {
       setError(err.response?.data?.message || "Prišlo je do napake.");
     } finally {
