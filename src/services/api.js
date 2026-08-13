@@ -14,6 +14,24 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
+// AuthContext sem preda svojo funkcijo za odjavo
+let odjaviUporabnika = null;
+export const nastaviOdjavo = (fn) => {
+  odjaviUporabnika = fn;
+};
+
+// Ob poteku ali neveljavnem žetonu uporabnika odjavi
+api.interceptors.response.use(
+  (response) => response,
+  async (error) => {
+    const status = error.response?.status;
+    if ((status === 401 || status === 403) && odjaviUporabnika) {
+      await odjaviUporabnika();
+    }
+    return Promise.reject(error);
+  },
+);
+
 // Auth
 export const login = (data) => api.post("/auth/login", data);
 export const register = (data) => api.post("/auth/register", data);
