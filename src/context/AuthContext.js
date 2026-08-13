@@ -1,14 +1,21 @@
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { createContext, useContext, useEffect, useState } from "react";
-
+import { nastaviOdjavo } from "../services/api";
 const AuthContext = createContext();
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
+  const logoutUser = async () => {
+    await AsyncStorage.removeItem("user");
+    await AsyncStorage.removeItem("token");
+    setUser(null);
+  };
+
   useEffect(() => {
     restoreSession();
+    nastaviOdjavo(logoutUser);
   }, []);
 
   const restoreSession = async () => {
@@ -29,12 +36,6 @@ export function AuthProvider({ children }) {
     await AsyncStorage.setItem("user", JSON.stringify(userData));
     await AsyncStorage.setItem("token", token);
     setUser(userData);
-  };
-
-  const logoutUser = async () => {
-    await AsyncStorage.removeItem("user");
-    await AsyncStorage.removeItem("token");
-    setUser(null);
   };
 
   return (
