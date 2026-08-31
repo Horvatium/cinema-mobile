@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import Colors from "../../constants/colors";
 import { useAuth } from "../context/AuthContext";
-import { login } from "../services/api";
+import { login, resendVerification } from "../services/api";
 
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
@@ -21,6 +21,9 @@ export default function LoginScreen({ navigation }) {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { loginUser } = useAuth();
+  const [needsVerification, setNeedsVerification] = useState(false);
+  const [resendMessage, setResendMessage] = useState("");
+  const [resending, setResending] = useState(false);
 
   const handleLogin = async () => {
     setError("");
@@ -33,8 +36,24 @@ export default function LoginScreen({ navigation }) {
       await loginUser(response.data.user, response.data.token);
     } catch (err) {
       setError(err.response?.data?.message || "Prišlo je do napake.");
+      if (err.response?.data?.requiresVerification) {
+        setNeedsVerification(true);
+      }
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    setResending(true);
+    setResendMessage("");
+    try {
+      const response = await resendVerification(email);
+      setResendMessage(response.data.message);
+    } catch (err) {
+      setResendMessage("Sporočila ni bilo mogoče poslati. Poskusite znova.");
+    } finally {
+      setResending(false);
     }
   };
 
@@ -63,6 +82,25 @@ export default function LoginScreen({ navigation }) {
             <Text style={styles.errorText}>{error}</Text>
           </View>
         ) : null}
+
+        {needsVerification && (
+          <View style={styles.errorBox}>
+            {resendMessage ? (
+              <Text style={styles.errorText}>{resendMessage}</Text>
+            ) : (
+              <TouchableOpacity
+                onPress={handleResend}
+                disabled={resending || !email}
+              >
+                <Text style={styles.switchLink}>
+                  {resending
+                    ? "Pošiljanje..."
+                    : "Znova pošlji potrditveno povezavo"}
+                </Text>
+              </TouchableOpacity>
+            )}
+          </View>
+        )}
 
         <View style={styles.form}>
           <Text style={styles.label}>E-pošta</Text>

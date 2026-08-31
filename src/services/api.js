@@ -35,6 +35,8 @@ api.interceptors.response.use(
 // Auth
 export const login = (data) => api.post("/auth/login", data);
 export const register = (data) => api.post("/auth/register", data);
+export const resendVerification = (email) =>
+  api.post("/auth/resend-verification", { email });
 
 // Filmi & predstave
 export const getScreenings = () => api.get("/screenings");
