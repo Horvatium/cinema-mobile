@@ -70,9 +70,13 @@ export default function HomeScreen({ navigation }) {
   // Vrtiljak se vrti po vseh filmih, seznam spodaj pa upošteva iskalni niz
   const allFilms = Object.values(filmMap);
   const films = search
-    ? allFilms.filter((f) =>
-        f.title.toLowerCase().includes(search.toLowerCase()),
-      )
+    ? allFilms.filter((f) => {
+        const q = search.toLowerCase();
+        return (
+          f.title.toLowerCase().includes(q) ||
+          (f.title_sl && f.title_sl.toLowerCase().includes(q))
+        );
+      })
     : allFilms;
 
   // Samodejni premik vrtiljaka na pet sekund; ob odstranitvi zaslona
@@ -102,7 +106,7 @@ export default function HomeScreen({ navigation }) {
         data={films}
         keyExtractor={(item) => item.title}
         showsVerticalScrollIndicator={false}
-        ListHeaderComponent={() => (
+        ListHeaderComponent={
           <View>
             {/* ── Hero pasica ── */}
             {heroFilm && (
@@ -196,7 +200,7 @@ export default function HomeScreen({ navigation }) {
               <Text style={styles.sectionLabel}>TRENUTNO NA SPOREDU</Text>
             </View>
           </View>
-        )}
+        }
         renderItem={({ item: film }) => (
           <TouchableOpacity
             style={styles.filmRow}

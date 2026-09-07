@@ -235,16 +235,14 @@ export default function FilmDetailScreen({ route, navigation }) {
             <Text style={styles.legendText}>Prosto</Text>
           </View>
           <View style={styles.legendItem}>
-            <View
-              style={[styles.legendDot, { backgroundColor: Colors.primary }]}
-            />
+            <View style={[styles.legendDot, { backgroundColor: Colors.red }]} />
             <Text style={styles.legendText}>Izbrano</Text>
           </View>
           <View style={styles.legendItem}>
             <View
               style={[
                 styles.legendDot,
-                { backgroundColor: Colors.purple, opacity: 0.6 },
+                { backgroundColor: Colors.primary, opacity: 0.6 },
               ]}
             />
             <Text style={styles.legendText}>Zasedeno</Text>
@@ -273,13 +271,13 @@ export default function FilmDetailScreen({ route, navigation }) {
                       styles.seat,
                       {
                         backgroundColor: isTaken
-                          ? Colors.purple
+                          ? Colors.primary
                           : isSelected
-                            ? Colors.primary
+                            ? Colors.red
                             : Colors.surface,
                         opacity: isTaken ? 0.6 : 1,
                         borderColor: isSelected
-                          ? Colors.primary
+                          ? Colors.red
                           : Colors.surfaceBorder,
                       },
                     ]}

@@ -16,4 +16,5 @@ export default {
   error: "#ff6b6b",
   errorLight: "rgba(255,107,107,0.1)",
   navy: "#1a0a3e",
+  red: "#e50914",
 };
