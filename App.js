@@ -12,17 +12,25 @@ import LoginScreen from "./src/screens/LoginScreen";
 import MyReservationsScreen from "./src/screens/MyReservationsScreen";
 import RegisterScreen from "./src/screens/RegisterScreen";
 
+// Korenska datoteka mobilne aplikacije: nastavi ovojnice (varno območje,
+// stanje prijave) in sklad zaslonov.
 const Stack = createNativeStackNavigator();
 
+// Navigacija je odvisna od prijave, zato mora biti znotraj AuthProvider —
+// od tod ločena komponenta namesto vsega neposredno v App().
 function Navigation() {
   const { user, loading } = useAuth();
 
+  // Za obvestila zaprosimo šele po prijavi, ne ob prvem zagonu — uporabnik
+  // takrat že ve, čemu bodo namenjena
   useEffect(() => {
     if (user) {
       registerForPushNotifications();
     }
   }, [user]);
 
+  // Med obnavljanjem seje iz pomnilnika naprave pokažemo vrtavko, da
+  // prijavljen uporabnik za trenutek ne vidi prijavnega zaslona
   if (loading) {
     return (
       <View
@@ -48,6 +56,8 @@ function Navigation() {
           contentStyle: { backgroundColor: "#0a0a0a" },
         }}
       >
+        {/* Sklada sta ločena: neprijavljen uporabnik do zaslonov aplikacije
+            sploh nima poti, zato se nanje ni mogoče vrniti z gumbom nazaj */}
         {!user ? (
           <>
             <Stack.Screen

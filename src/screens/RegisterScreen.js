@@ -13,6 +13,8 @@ import {
 } from "react-native";
 import { register } from "../services/api";
 
+// Registracijski zaslon. Po uspešni oddaji uporabnika ne prijavimo —
+// najprej mora potrditi elektronski naslov prek povezave iz e-pošte.
 export default function RegisterScreen({ navigation }) {
   const [form, setForm] = useState({
     first_name: "",

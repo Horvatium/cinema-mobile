@@ -15,16 +15,20 @@ import Colors from "../../constants/colors";
 import { useAuth } from "../context/AuthContext";
 import { login, resendVerification } from "../services/api";
 
+// Prijavni zaslon. Po uspešni prijavi navigacije ne kličemo — sklad zaslonov
+// v App.js se zamenja sam, ko AuthContext dobi uporabnika.
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { loginUser } = useAuth();
+  // Zastavico postavi zaledje, kadar je geslo pravilno, naslov pa nepotrjen
   const [needsVerification, setNeedsVerification] = useState(false);
   const [resendMessage, setResendMessage] = useState("");
   const [resending, setResending] = useState(false);
 
+  // Prijava: preverimo polji, pokličemo zaledje in sejo predamo kontekstu
   const handleLogin = async () => {
     setError("");
     if (!email || !password) {
@@ -44,6 +48,7 @@ export default function LoginScreen({ navigation }) {
     }
   };
 
+  // Ponovno pošiljanje potrditvene povezave na vpisani naslov
   const handleResend = async () => {
     setResending(true);
     setResendMessage("");
@@ -58,6 +63,8 @@ export default function LoginScreen({ navigation }) {
   };
 
   return (
+    // KeyboardAvoidingView umakne obrazec nad tipkovnico, da vnosna polja
+    // ob tipkanju ostanejo vidna
     <KeyboardAvoidingView
       style={{ flex: 1 }}
       behavior={Platform.OS === "ios" ? "padding" : "height"}

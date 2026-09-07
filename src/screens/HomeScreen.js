@@ -15,6 +15,8 @@ import { useAuth } from "../context/AuthContext";
 import { getScreenings } from "../services/api";
 import { formatPrice } from "../services/notifications";
 
+// Domači zaslon: vrtiljak izpostavljenih filmov, iskalnik in seznam filmov
+// na sporedu. Ustreza domači strani spletne različice.
 export default function HomeScreen({ navigation }) {
   const [screenings, setScreenings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -22,6 +24,8 @@ export default function HomeScreen({ navigation }) {
   const [heroIndex, setHeroIndex] = useState(0);
   const { user, logoutUser } = useAuth();
 
+  // useCallback ohrani isto funkcijo med izrisi, da je useEffect spodaj
+  // ne sproža znova ob vsaki spremembi stanja
   const fetchScreenings = useCallback(async () => {
     try {
       const response = await getScreenings();
@@ -38,6 +42,8 @@ export default function HomeScreen({ navigation }) {
     fetchScreenings();
   }, [fetchScreenings]);
 
+  // Zaledje vrne po eno vrstico na predvajanje; tu jih združimo po filmu,
+  // da lahko pri vsakem filmu naštejemo vse njegove ure
   const filmMap = {};
   screenings.forEach((s) => {
     if (!filmMap[s.film_title]) {
@@ -61,6 +67,7 @@ export default function HomeScreen({ navigation }) {
     filmMap[s.film_title].screenings.push(s);
   });
 
+  // Vrtiljak se vrti po vseh filmih, seznam spodaj pa upošteva iskalni niz
   const allFilms = Object.values(filmMap);
   const films = search
     ? allFilms.filter((f) =>
@@ -68,6 +75,8 @@ export default function HomeScreen({ navigation }) {
       )
     : allFilms;
 
+  // Samodejni premik vrtiljaka na pet sekund; ob odstranitvi zaslona
+  // interval počistimo
   useEffect(() => {
     if (allFilms.length <= 1) return;
     const interval = setInterval(() => {
@@ -87,6 +96,8 @@ export default function HomeScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
+      {/* FlatList izriše samo vidne vrstice; vrtiljak in iskalnik sta zato v
+          ListHeaderComponent, da se premikata skupaj s seznamom */}
       <FlatList
         data={films}
         keyExtractor={(item) => item.title}

@@ -1,3 +1,5 @@
+// Barvna paleta aplikacije na enem mestu, da so zasloni med seboj usklajeni
+// in da barve ni treba prepisovati v vsak StyleSheet posebej.
 export default {
   background: "#080b1a",
   surface: "rgba(255,255,255,0.05)",

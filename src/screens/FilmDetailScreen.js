@@ -14,7 +14,12 @@ import Colors from "../../constants/colors";
 import { createReservation, getScreeningSeats } from "../services/api";
 import { showBookingConfirmedNotification } from "../services/notifications";
 
+// Podrobnosti filma in izbira sedežev. Za razliko od spletne različice tu
+// plačila ni: rezervacija se ustvari takoj kot potrjena, plačilo vstopnic
+// je v celoti podprto v spletni aplikaciji.
 export default function FilmDetailScreen({ route, navigation }) {
+  // Podatke o filmu in predvajanju prejmemo ob navigaciji z domačega zaslona;
+  // sveže naložimo samo sedeže, ki se pogosto spreminjajo
   const { screening, film } = route.params;
 
   const [seats, setSeats] = useState([]);
@@ -38,6 +43,7 @@ export default function FilmDetailScreen({ route, navigation }) {
     fetchSeats();
   }, [fetchSeats]);
 
+  // Klik na sedež ga doda med izbrane ali odstrani; zasedeni se ne odzivajo
   const toggleSeat = (seat) => {
     if (seat.status === "taken") return;
     setSelectedSeats((prev) => {
@@ -47,6 +53,8 @@ export default function FilmDetailScreen({ route, navigation }) {
     });
   };
 
+  // Rezervacija: zaledje znova preveri, ali so sedeži še prosti, zato lahko
+  // klic spodleti tudi, če so na zemljevidu videti prosti
   const handleReserve = async () => {
     if (selectedSeats.length === 0) {
       return Alert.alert(
@@ -61,6 +69,7 @@ export default function FilmDetailScreen({ route, navigation }) {
         screening_id: parseInt(screening.id),
         seat_ids: selectedSeats.map((s) => parseInt(s.id)),
       });
+      // Lokalno obvestilo kot potrditev; e-pošto pošlje zaledje
       await showBookingConfirmedNotification(
         film.title_sl || film.title,
         selectedSeats.map((s) => `${s.row_label}${s.seat_number}`).join(", "),
@@ -80,6 +89,7 @@ export default function FilmDetailScreen({ route, navigation }) {
     }
   };
 
+  // Zemljevid izrisujemo po vrstah, zaledje pa vrne raven seznam sedežev
   // Razporeditev sedežev po vrstah
   const rows = {};
   seats.forEach((seat) => {

@@ -15,6 +15,8 @@ import {
   showBookingCancelledNotification,
 } from "../services/notifications";
 
+// Seznam vstopnic prijavljenega uporabnika z možnostjo preklica.
+// Zaledje vrne samo rezervacije lastnika žetona.
 export default function MyReservationsScreen() {
   const [reservations, setReservations] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,6 +26,7 @@ export default function MyReservationsScreen() {
     fetchReservations();
   }, []);
 
+  // Po preklicu seznam znova naložimo, da se stanje ujema z bazo
   const fetchReservations = async () => {
     try {
       const response = await getMyReservations();
@@ -35,6 +38,8 @@ export default function MyReservationsScreen() {
     }
   };
 
+  // Preklic je nepovraten, zato ga potrdimo v pogovornem oknu; naslov filma
+  // potrebujemo za besedilo obvestila po uspešnem preklicu
   const handleCancel = (id, filmTitle) => {
     Alert.alert(
       "Preklic rezervacije",
@@ -58,6 +63,7 @@ export default function MyReservationsScreen() {
     );
   };
 
+  // Barva besedila glede na stanje rezervacije
   const getStatusColor = (status) => {
     switch (status) {
       case "confirmed":

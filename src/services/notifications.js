@@ -2,6 +2,12 @@ import * as Device from "expo-device";
 import * as Notifications from "expo-notifications";
 import { Platform } from "react-native";
 
+// Obvestila v mobilni aplikaciji. Vsa spodnja obvestila so lokalna —
+// naprava jih prikaže sama takoj po dejanju uporabnika in ne pridejo
+// s strežnika.
+
+// Privzeto se obvestilo, ki pride med uporabo aplikacije, ne pokaže;
+// s tem rokovalnikom ga prikažemo tudi takrat.
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
@@ -14,7 +20,9 @@ Notifications.setNotificationHandler({
 export const formatPrice = (value) =>
   `${Number(value).toFixed(2).replace(".", ",")} €`;
 
+// Zaprosi za dovoljenje za obvestila in na Androidu pripravi kanal
 export const registerForPushNotifications = async () => {
+  // Simulator obvestil ne podpira
   if (!Device.isDevice) return null;
 
   const { status: existingStatus } = await Notifications.getPermissionsAsync();
@@ -27,6 +35,8 @@ export const registerForPushNotifications = async () => {
 
   if (finalStatus !== "granted") return null;
 
+  // Android od različice 8 naprej zahteva kanal, sicer se obvestilo
+  // ne prikaže
   if (Platform.OS === "android") {
     await Notifications.setNotificationChannelAsync("default", {
       name: "KinoPlex",
@@ -39,6 +49,7 @@ export const registerForPushNotifications = async () => {
   return true;
 };
 
+// Obvestilo po uspešni rezervaciji (trigger: null pomeni takoj)
 export const showBookingConfirmedNotification = async (
   filmTitle,
   seats,
@@ -54,6 +65,7 @@ export const showBookingConfirmedNotification = async (
   });
 };
 
+// Obvestilo po preklicu rezervacije s strani uporabnika
 export const showBookingCancelledNotification = async (filmTitle) => {
   await Notifications.scheduleNotificationAsync({
     content: {
@@ -65,6 +77,7 @@ export const showBookingCancelledNotification = async (filmTitle) => {
   });
 };
 
+// Obvestilo ob odpovedi predvajanja s strani kinematografa
 export const showScreeningCancelledNotification = async (
   filmTitle,
   screeningTime,
