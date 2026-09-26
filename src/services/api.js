@@ -1,8 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+// Naslov API-ja se določi ob gradnji (EXPO_PUBLIC_API_URL v .env). Za lokalni
+// API na telefonu uporabi IP računalnika v omrežju, ne localhost, npr.
+// http://192.168.0.17:5000/api. Brez nastavitve se uporabi produkcijski API.
 const api = axios.create({
-    baseURL: 'https://cinema-api-production-a533.up.railway.app/api',
+    baseURL:
+        process.env.EXPO_PUBLIC_API_URL || 'https://cinema-api-production-a533.up.railway.app/api',
 });
 
 // Vsaki zahtevi priloži žeton
