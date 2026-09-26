@@ -23,7 +23,7 @@ jobs:
       - run: npm ci
       - run: npm run lint
       - run: npm run format:check
-      # Bundles the JavaScript for Android the same way a release build does,
-      # which catches broken imports and syntax errors without a native build
+      # Sestavi JavaScript za Android enako kot gradnja za izdajo, kar ujame
+      # pokvarjene uvoze in skladenjske napake brez nativne gradnje
       - name: Bundle for Android
         run: npx expo export --platform android --output-dir dist

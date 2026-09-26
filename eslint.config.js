@@ -8,7 +8,7 @@ module.exports = defineConfig([
     prettier,
     {
         rules: {
-            // Flags axios.create(), which is axios's documented API
+            // Pravilo bi označilo axios.create(), ki je uradni način uporabe axiosa
             'import/no-named-as-default-member': 'off',
         },
     },
