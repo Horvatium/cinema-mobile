@@ -1,19 +1,19 @@
 {
-  "cli": {
-    "version": ">= 5.0.0"
-  },
-  "build": {
-    "preview": {
-      "channel": "preview",
-      "android": {
-        "buildType": "apk"
-      }
+    "cli": {
+        "version": ">= 5.0.0"
     },
-    "production": {
-      "channel": "production",
-      "android": {
-        "buildType": "app-bundle"
-      }
+    "build": {
+        "preview": {
+            "channel": "preview",
+            "android": {
+                "buildType": "apk"
+            }
+        },
+        "production": {
+            "channel": "production",
+            "android": {
+                "buildType": "app-bundle"
+            }
+        }
     }
-  }
 }
