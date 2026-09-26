@@ -1,58 +1,84 @@
-# KinoPlex — Mobilna aplikacija 📱
+# KinoPlex Mobile
 
-Mobilna aplikacija informacijskega sistema za upravljanje kinematografa, izdelana z React
-Native in Expo. Projekt je bil izdelan v okviru diplomske naloge.
+[![CI](https://github.com/Horvatium/cinema-mobile/actions/workflows/ci.yml/badge.svg)](https://github.com/Horvatium/cinema-mobile/actions/workflows/ci.yml)
 
-## O projektu
+React Native (Expo) app for **KinoPlex**, a cinema ticket booking system. Customers browse the
+programme, pick seats and book tickets from their phone, and get notified about their bookings.
+It uses the same API as the web app. Built as part of my bachelor's thesis.
 
-Mobilna aplikacija strankam omogoča pregledovanje filmskega sporeda, izbiro sedežev in
-rezervacijo vstopnic neposredno s telefona, vključno s potisnimi obvestili ob potrditvi ali
-preklicu rezervacije. Aplikacija uporablja poenostavljen postopek rezervacije brez neposrednega
-plačila znotraj aplikacije — plačevanje vstopnic je v celoti podprto v spletni aplikaciji
-[cinema-web](https://github.com/Horvatium/cinema-web).
+**API:** [cinema-api](https://github.com/Horvatium/cinema-api) ·
+**Web app:** [cinema-web](https://github.com/Horvatium/cinema-web) ([kinoplex.si](https://www.kinoplex.si)) ·
+[Slovenska različica](README.sl.md)
 
-Podatke pridobiva iz istega zalednega sistema kot spletna aplikacija:
-[cinema-api](https://github.com/Horvatium/cinema-api).
+| Login                                       | Programme                               | Seat selection                          |
+| ------------------------------------------- | --------------------------------------- | --------------------------------------- |
+| ![Login screen](docs/screenshots/login.png) | ![Programme](docs/screenshots/home.png) | ![Seat map](docs/screenshots/seats.png) |
 
-## Tehnologije
+## Features
 
-- **React Native** — ogrodje za razvoj mobilnih aplikacij
-- **Expo** — razvojno okolje in orodja za gradnjo
-- **React Navigation** — navigacija med zasloni
-- **Axios** — komunikacija z zalednim sistemom
-- **Expo Notifications** — lokalna potisna obvestila
+- Login and registration with email verification. The session is kept in AsyncStorage and ends
+  automatically when the JWT expires.
+- Programme with a featured-film carousel and search
+- Film details with an IMDb link and trailer
+- Seat map that scales to the screen width
+- Booking without in-app payment; online payment is available on the web app
+- "My tickets": view and cancel your own bookings
+- Notifications: local notifications when a booking is confirmed or cancelled, and push
+  notifications from the API (via Expo Push) when the cinema cancels a screening
 
-## Funkcionalnosti
+## Tech stack
 
-- Prijava in registracija uporabnikov
-- Pregled filmskega sporeda in podrobnosti filmov
-- Izbira sedežev na interaktivnem zemljevidu dvorane
-- Rezervacija vstopnic s potisnim obvestilom ob potrditvi
-- Pregled in preklic lastnih rezervacij
+| Area          | Technology                                               |
+| ------------- | -------------------------------------------------------- |
+| Framework     | React Native 0.81, Expo SDK 54                           |
+| Navigation    | React Navigation (native stack)                          |
+| API client    | Axios with a JWT interceptor and logout on expired token |
+| Storage       | AsyncStorage                                             |
+| Notifications | expo-notifications, Expo Push                            |
+| Delivery      | EAS Build, EAS Update                                    |
+| Tooling       | ESLint (eslint-config-expo), Prettier, GitHub Actions    |
 
-## Zagon projekta
+## Getting started
 
-```
+Requires Node.js 22 and the [Expo Go](https://expo.dev/go) app on your phone, or an Android
+emulator.
+
+```bash
+git clone https://github.com/Horvatium/cinema-mobile.git
+cd cinema-mobile
 npm install
 npx expo start
 ```
 
-Aplikacijo se lahko med razvojem zažene prek aplikacije Expo Go na telefonu, ali se zgradi
-namestitveno datoteko (APK) za Android:
+Scan the QR code with Expo Go. By default the app talks to the production API. To use a local
+API, for example the Docker setup from [cinema-api](https://github.com/Horvatium/cinema-api),
+copy `.env.example` to `.env` and set `EXPO_PUBLIC_API_URL`. On a physical phone, use your
+computer's LAN IP address, not `localhost`.
 
+```bash
+EXPO_PUBLIC_API_URL=http://192.168.0.17:5000/api
 ```
-npx expo prebuild --platform android --clean
-cd android
-gradlew assembleRelease
+
+With a local API from the seed data, you can log in as `demo@kinoplex.test` / `Demo123!`.
+This account exists only in the local seed database.
+
+### Building an APK
+
+With [EAS Build](https://docs.expo.dev/build/introduction/):
+
+```bash
+npx eas build --platform android --profile preview
 ```
 
-APK datoteka se ustvari v `android/app/build/outputs/apk/release/app-release.apk`.
+Or locally, with the Android SDK installed, run `build.bat` on Windows. It runs
+`expo prebuild` and then `gradlew assembleRelease`.
 
-## Diagrami
+## CI
 
-Diagrami sistema (EER, primeri uporabe, razredni diagram, arhitektura namestitve) so na voljo
-v mapi [`docs/diagrami`](./docs/diagrami).
+Every push and pull request runs [the CI workflow](.github/workflows/ci.yml): ESLint, a
+Prettier check and an Expo export of the Android JavaScript bundle. The export catches broken
+imports and syntax errors without a full native build.
 
-## Avtor
+## Author
 
-Diplomska naloga — Vid Gudič, CPU, 2026.
+**Vid Gudič** · bachelor's thesis, CPU, 2026
