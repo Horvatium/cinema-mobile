@@ -55,7 +55,7 @@ export default function LoginScreen({ navigation }) {
     try {
       const response = await resendVerification(email);
       setResendMessage(response.data.message);
-    } catch (err) {
+    } catch {
       setResendMessage("Sporočila ni bilo mogoče poslati. Poskusite znova.");
     } finally {
       setResending(false);

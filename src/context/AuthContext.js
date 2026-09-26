@@ -35,6 +35,8 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     restoreSession();
     nastaviOdjavo(logoutUser);
+    // Samo enkrat ob zagonu aplikacije
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   // Ko žeton poteče med uporabo, odjavi takoj in ne šele ob naslednjem klicu API
