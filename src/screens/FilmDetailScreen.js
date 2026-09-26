@@ -8,6 +8,7 @@ import {
     StyleSheet,
     Text,
     TouchableOpacity,
+    useWindowDimensions,
     View,
 } from 'react-native';
 import Colors from '../../constants/colors';
@@ -17,10 +18,18 @@ import { showBookingConfirmedNotification } from '../services/notifications';
 // Podrobnosti filma in izbira sedežev. Za razliko od spletne različice tu
 // plačila ni: rezervacija se ustvari takoj kot potrjena, plačilo vstopnic
 // je v celoti podprto v spletni aplikaciji.
+// Mere zemljevida sedežev (v pt); sedež se prilagodi širini zaslona
+const CONTENT_PADDING = 16;
+const ROW_LABEL_WIDTH = 14;
+const SEAT_GAP = 5;
+const MIN_SEAT = 20;
+const MAX_SEAT = 32;
+
 export default function FilmDetailScreen({ route, navigation }) {
     // Podatke o filmu in predvajanju prejmemo ob navigaciji z domačega zaslona;
     // sveže naložimo samo sedeže, ki se pogosto spreminjajo
     const { screening, film } = route.params;
+    const { width: screenWidth } = useWindowDimensions();
 
     const [seats, setSeats] = useState([]);
     const [selectedSeats, setSelectedSeats] = useState([]);
@@ -93,6 +102,18 @@ export default function FilmDetailScreen({ route, navigation }) {
         if (!rows[seat.row_label]) rows[seat.row_label] = [];
         rows[seat.row_label].push(seat);
     });
+
+    // Velikost sedeža izračunamo iz širine zaslona, da najdaljša vrsta skupaj
+    // z oznakama vrste vedno pride na zaslon (npr. 10 sedežev na 360 pt)
+    const seatsPerRow = Math.max(1, ...Object.values(rows).map((r) => r.length));
+    const availableWidth = screenWidth - 2 * CONTENT_PADDING - 2 * ROW_LABEL_WIDTH;
+    const seatSize = Math.max(
+        MIN_SEAT,
+        Math.min(
+            MAX_SEAT,
+            Math.floor((availableWidth - (seatsPerRow + 1) * SEAT_GAP) / seatsPerRow)
+        )
+    );
 
     const totalPrice = (selectedSeats.length * screening.price).toFixed(2);
 
@@ -263,6 +284,8 @@ export default function FilmDetailScreen({ route, navigation }) {
                                         style={[
                                             styles.seat,
                                             {
+                                                width: seatSize,
+                                                height: seatSize,
                                                 backgroundColor: isTaken
                                                     ? Colors.primary
                                                     : isSelected
@@ -389,7 +412,7 @@ const styles = StyleSheet.create({
         marginBottom: 4,
     },
     filmMeta: { color: Colors.grey, fontSize: 12 },
-    content: { padding: 16 },
+    content: { padding: CONTENT_PADDING },
 
     // Podrobnosti filma
     detailRow: {
@@ -510,18 +533,16 @@ const styles = StyleSheet.create({
     seatRow: {
         flexDirection: 'row',
         alignItems: 'center',
-        gap: 5,
-        marginBottom: 5,
+        gap: SEAT_GAP,
+        marginBottom: SEAT_GAP,
     },
     rowLabel: {
         color: Colors.grey,
         fontSize: 11,
-        width: 14,
+        width: ROW_LABEL_WIDTH,
         textAlign: 'center',
     },
     seat: {
-        width: 32,
-        height: 32,
         borderRadius: 6,
         justifyContent: 'center',
         alignItems: 'center',
