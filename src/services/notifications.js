@@ -71,22 +71,3 @@ export const showBookingCancelledNotification = async (filmTitle) => {
         trigger: null,
     });
 };
-
-// Obvestilo ob odpovedi predvajanja s strani kinematografa
-export const showScreeningCancelledNotification = async (filmTitle, screeningTime) => {
-    await Notifications.scheduleNotificationAsync({
-        content: {
-            title: '⚠️ Predvajanje odpovedano',
-            body: `${filmTitle} na ${new Date(screeningTime).toLocaleDateString('sl-SI', {
-                weekday: 'short',
-                month: 'short',
-                day: 'numeric',
-                hour: '2-digit',
-                minute: '2-digit',
-                timeZone: 'UTC',
-            })} je bilo preklicano.`,
-            sound: true,
-        },
-        trigger: null,
-    });
-};
