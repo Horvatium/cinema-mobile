@@ -7,7 +7,7 @@ na telefonu pregledujejo spored, izberejo sedeže in rezervirajo vstopnice. Upor
 kot spletna aplikacija. Nastala je v okviru diplomske naloge.
 
 **API:** [cinema-api](https://github.com/Horvatium/cinema-api)
-([dokumentacija](https://cinema-api-production-a533.up.railway.app/api/docs/)) ·
+([dokumentacija](https://api.kinoplex.si/api/docs/)) ·
 **Spletna aplikacija:** [cinema-web](https://github.com/Horvatium/cinema-web) ([kinoplex.si](https://www.kinoplex.si)) ·
 [English version](README.en.md)
 
@@ -73,7 +73,8 @@ npx expo start
 ```
 
 QR kodo skeniraj z Expo Go. Za hiter ogled brez telefona aplikacijo zaženeš v brskalniku z
-`npm run web`.
+`npm run web`. V brskalniku se prijava ne obdrži: API žeton v odgovoru prijave vrne samo
+odjemalcem brez glave `Origin` (aplikacija na napravi), brskalnikom pa le piškotek.
 
 Privzeto aplikacija uporablja produkcijski API. Za lokalni API, na primer iz nastavitve za
 Docker v [cinema-api](https://github.com/Horvatium/cinema-api), kopiraj `.env.example` v `.env`

@@ -7,7 +7,7 @@ programme, pick seats and book tickets from their phone. It uses the same API as
 Built as part of my bachelor's thesis.
 
 **API:** [cinema-api](https://github.com/Horvatium/cinema-api)
-([docs](https://cinema-api-production-a533.up.railway.app/api/docs/)) ·
+([docs](https://api.kinoplex.si/api/docs/)) ·
 **Web app:** [cinema-web](https://github.com/Horvatium/cinema-web) ([kinoplex.si](https://www.kinoplex.si)) ·
 [Slovenska različica](README.md)
 
@@ -73,7 +73,9 @@ npx expo start
 ```
 
 Scan the QR code with Expo Go. For a quick look without a phone, run the app in a browser with
-`npm run web`.
+`npm run web`. Login does not persist in a browser: the API returns the token in the login
+response only to clients without an `Origin` header (the app on a device), and to browsers
+only as a cookie.
 
 By default the app talks to the production API. To use a local API, for example the Docker
 setup from [cinema-api](https://github.com/Horvatium/cinema-api), copy `.env.example` to `.env`
